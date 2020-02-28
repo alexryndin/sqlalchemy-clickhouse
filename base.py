@@ -192,6 +192,12 @@ class ClickHouseDialect(default.DefaultDialect):
             'password': url.password,
         }
         kwargs.update(url.query)
+
+        if url.database and '/' in url.database:
+            s = url.database.split('/')
+            kwargs['db_url'] += '/'.join(s[:-1])
+            url.database = s[-1]
+
         return ([url.database or 'default'], kwargs)
 
     def get_schema_names(self, connection, **kw):
