@@ -195,7 +195,7 @@ class ClickHouseDialect(default.DefaultDialect):
 
         if url.database and '/' in url.database:
             s = url.database.split('/')
-            kwargs['db_url'] += '/'.join(s[:-1])
+            kwargs['db_url'] += '/'.join(s[:-1]) + '/'
             url.database = s[-1]
 
         return ([url.database or 'default'], kwargs)
